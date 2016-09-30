@@ -40,6 +40,7 @@ function PetChat(){
   var numPets = null;
 
   var askHowMany = function(){
+      display.innerHTML = "";
     return prompt("How many pets do you have?");
   };
 
@@ -60,8 +61,9 @@ function PetChat(){
             break;
       }
 
-      display.innerHTML = pets[0].name + ": " + pets[0].speak();
+
     }
+     pets.forEach(updateDisplay)
   };
 
   this.init = function(){
@@ -70,6 +72,10 @@ function PetChat(){
     }
 
     askPetInfo();
+  }
+
+  function updateDisplay (element, index, array) {
+      display.innerHTML += element.name + ": " + element.speak() + "</br>";
   }
 };
 
