@@ -6,27 +6,30 @@ function Pet (name) {
 
     this.speak = function () {
         return "I am a pet called: " + name;
-    }
+    };
 
 };
 
-Dog.prototype = new Pet (name);
-Cat.prototype = new Pet (name);
-Bird.prototype = new Pet (name);
-
 function Dog (name) {
+    this.base = Pet;
+    this.base(name);
     this.speak = function () {
           return "Woof"
     };
 };
 
+
 function Cat (name) {
+    this.base = Pet;
+    this.base(name);
     this.speak = function () {
           return "Meow"
     };
 };
 
 function Bird (name) {
+    this.base = Pet;
+    this.base(name);
     this.speak = function () {
           return "Squawk"
     };
@@ -41,11 +44,23 @@ function PetChat(){
   };
 
   var askPetInfo = function(){
+    var pets = [];
     for(var i=0; i<numPets; i++){
       var type = prompt("What is pet #" + (i+1) + "? (cat, dog, bird)");
       var name = prompt("What is pet #" + (i+1) + "'s name'?");
-      var textOut = type + " " + name + "<br />"
-      display.innerHTML += textOut.speak();
+      switch (type.toLowerCase()) {
+          case "dog":
+            pets.push(new Dog(name));
+            break;
+          case "cat":
+            pets.push(new Cat(name));
+            break;
+          case "bird":
+            pets.push(new Bird(name));
+            break;
+      }
+
+      display.innerHTML = pets[0].name + ": " + pets[0].speak();
     }
   };
 
